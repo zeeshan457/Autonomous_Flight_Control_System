@@ -1,8 +1,8 @@
 # Autonomous_Flight_Control_System
 
-## Authors: ZEESHAN MAHMOOD | ADIL KHAN
+## AUTHORS: ZEESHAN MAHMOOD | ADIL KHAN
 
-## PROJECT DESCRIPTION
+## PROJECT DESCRIPTION:
 
 The Autonomous Flight Control Drone project is an innovative and challenging endeavor that aims to develop an intelligent drone capable of flying autonomously, navigating through predefined waypoints, and avoiding obstacles in real-time. The drone will utilize cutting-edge Java programming techniques to create an efficient and reliable autonomous flight system.
 Key Features:
@@ -15,7 +15,7 @@ Key Features:
     5.	Safety Measures: The project will prioritize safety by implementing emergency stop procedures and fail-safe mechanisms to ensure the drone can be controlled manually or return to a safe location if any critical issues arise during autonomous flight.
     6.	Data Logging and Analysis: The drone will be equipped with onboard data logging capabilities to record flight data such as sensor readings, waypoints reached, and flight duration. Java-based data analysis tools will be developed to extract insights from the collected data.
 
-## TECHNOLOGIES USED
+## TECHNOLOGIES USED:
 
     Java Development Kit (JDK):
     •	Oracle JDK
@@ -42,3 +42,4 @@ Key Features:
     Version Control:
     •	Using Git to track code changes and collaborate with team members.
 
+## PROJECT ACHIEVEMENTS:
