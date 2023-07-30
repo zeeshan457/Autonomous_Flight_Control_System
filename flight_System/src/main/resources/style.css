@@ -1,0 +1,47 @@
+
+
+/* Style for the buttons */
+.button {
+    -fx-font-size: 12px;
+    -fx-pref-width: 120px;
+    -fx-pref-height: 40px;
+    -fx-background-color: #4CAF50; /* Green background color */
+    -fx-text-fill: white; /* White text color */
+    -fx-background-radius: 5px; /* Rounded corners */
+}
+
+.button:hover {
+    -fx-background-color: #45a049; /* Darker green background color on hover */
+}
+
+/* Style for labels */
+.label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333; /* Dark gray text color */
+}
+
+/* Style for text areas */
+.text-area {
+    -fx-font-size: 14px;
+    -fx-pref-width: 300px;
+    -fx-pref-height: 100px;
+    -fx-background-color: #f2f2f2; /* Light gray background color */
+}
+
+/* Style for the left layout with border */
+.left-layout {
+    -fx-border-color: #333; /* Dark gray border color */
+    -fx-border-width: 2px;
+    -fx-padding: 20px;
+}
+
+/* Style for the live video feed label */
+.live-video-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333; /* Dark gray text color */
+}
+/*.root {*/
+/*    -fx-background-color: f0f0f0;*/
+/*}*/
