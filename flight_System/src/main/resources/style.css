@@ -4,14 +4,14 @@
 .button {
     -fx-font-size: 12px;
     -fx-pref-width: 120px;
-    -fx-pref-height: 40px;
-    -fx-background-color: #4CAF50; /* Green background color */
+    -fx-pref-height: 20px;
+    -fx-background-color: #0074D9; /* Blue background color */
     -fx-text-fill: white; /* White text color */
     -fx-background-radius: 5px; /* Rounded corners */
 }
 
 .button:hover {
-    -fx-background-color: #45a049; /* Darker green background color on hover */
+    -fx-background-color: #1E488F; /* Darker blue background color */
 }
 
 /* Style for labels */

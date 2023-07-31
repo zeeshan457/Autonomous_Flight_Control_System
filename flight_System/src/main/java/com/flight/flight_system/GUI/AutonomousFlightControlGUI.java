@@ -1,5 +1,7 @@
 package com.flight.flight_system.GUI;
 
+import com.flight.flight_system.Data.FlightData;
+import com.flight.flight_system.Data.FlightMap;
 import com.flight.flight_system.Data.FlightOperations;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -40,10 +42,14 @@ public class AutonomousFlightControlGUI extends Application {
     private Button startLiveVideoButton;
     private Button cancelLiveVideoButton;
     private Button findDroneButton;
+    private Button showMapButton;
     private TextArea waypointsTextArea;
     private TextArea rangeFinderOutput;
     private ImageView cameraImageView;
     private final FlightOperations operations = new FlightOperations();
+    private final FlightMap map = new FlightMap();
+    private final FlightData data = new FlightData();
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -64,7 +70,7 @@ public class AutonomousFlightControlGUI extends Application {
         infoLabel = new Label("Click the buttons to control the drone:");
         infoLabel.setFont(Font.font("Arial", 14));
         batteryLabel = new Label("Battery: 100%");
-        timeLabel = new Label("Time: 12:00 PM");
+        timeLabel = new Label(data.getCurrentTime());
         weatherLabel = new Label("Weather: Sunny");
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10), e -> updateData()));
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -85,6 +91,7 @@ public class AutonomousFlightControlGUI extends Application {
         setWaypointsButton = new Button("Set Waypoints"); // New button for setting waypoints
         startLiveVideoButton = new Button("Start Live Video");
         cancelLiveVideoButton = new Button("Cancel Live Video");
+        showMapButton = new Button("Show Map");
 
         // Create the camera feed ImageView (placeholder image)
         cameraImageView = new ImageView(new Image("/drone.jpg"));
@@ -123,8 +130,9 @@ public class AutonomousFlightControlGUI extends Application {
         rangeFinderGrid.setAlignment(Pos.CENTER);
         rangeFinderGrid.setHgap(10);
         rangeFinderGrid.setVgap(10);
-        rangeFinderGrid.add(findDroneButton, 0, 1);
         rangeFinderGrid.add(rangeFinderOutput, 0, 0);
+        rangeFinderGrid.add(findDroneButton, 0, 1);
+        rangeFinderGrid.add(showMapButton, 0, 2);
         GridPane wayPointGrid = new GridPane();
         wayPointGrid.setAlignment(Pos.CENTER);
         wayPointGrid.setHgap(10);
@@ -148,12 +156,10 @@ public class AutonomousFlightControlGUI extends Application {
         TitledPane wayPointsPane = new TitledPane("Set Waypoint", wayPointGrid);
         wayPointsPane.setCollapsible(false);
 
-        // Create VBox for buttons panes
+        // VBoxes for the panes
         VBox buttonsVBox = new VBox(10);
         buttonsVBox.setAlignment(Pos.CENTER);
         buttonsVBox.getChildren().addAll(movementPane, droneActionPane);
-
-        // Create VBox for the camera image and live video buttons
         VBox cameraVBox = new VBox(10);
         cameraVBox.setAlignment(Pos.CENTER);
         cameraVBox.getChildren().addAll(new Label(), liveVideoPane, Options);
@@ -181,8 +187,10 @@ public class AutonomousFlightControlGUI extends Application {
         stage.show();
     }
 
+    /**
+     * Action events for buttons
+     */
     public void actionEvents() {
-        // Attach event handlers to the buttons
         takeoffButton.setOnAction(e -> operations.takeoff());
         landButton.setOnAction(e -> operations.land());
         startMissionButton.setOnAction(e -> operations.startMission());
@@ -191,16 +199,21 @@ public class AutonomousFlightControlGUI extends Application {
         turnRightButton.setOnAction(e -> operations.turnRight());
         setWaypointsButton.setOnAction(e -> operations.setWaypoints());
         findDroneButton.setOnAction(e -> operations.findDroneUsingRangeFinder(rangeFinderOutput));
+        showMapButton.setOnAction(e -> map.showMapOnBrowser());
     }
 
-    private void updateData() {
+    /**
+     * this method provides information about the drone and other information relevant to the time and location.
+     */
+    public void updateData() {
         // Update battery percentage (replace with actual data)
         int batteryPercentage = (int) (Math.random() * 100);
         batteryLabel.setText("Battery: " + batteryPercentage + "%");
 
         // Update time (replace with actual data)
-        String currentTime = "12:00 PM";
+        String currentTime = data.getCurrentTime();
         timeLabel.setText("Time: " + currentTime);
+        System.out.println(currentTime);
 
         // Update weather (replace with actual data)
         String currentWeather = "Sunny";
