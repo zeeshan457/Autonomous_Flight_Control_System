@@ -19,7 +19,6 @@ public class FlightMap {
         String mapsURL = "https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude;
 
         try {
-            // Open the URL in the default web browser
             Desktop.getDesktop().browse(new URI(mapsURL));
         } catch (IOException | URISyntaxException ex) {
             ex.printStackTrace();

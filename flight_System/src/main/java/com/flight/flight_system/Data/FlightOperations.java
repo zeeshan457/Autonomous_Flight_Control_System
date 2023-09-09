@@ -4,36 +4,83 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 
+import me.friwi.tello4j.api.drone.TelloDrone;
+import me.friwi.tello4j.api.exception.*;
+import me.friwi.tello4j.wifi.impl.WifiDrone;
+
 public class FlightOperations {
 
+    /**
+     * Attributes
+     */
+    TelloDrone drone = new WifiDrone();
+
+    /**
+     * Autonomous flight method
+     * This will most likely use a machine model to predict a flight plan
+     */
     public void startMission() {
         if (showConfirmationDialog("Mission Start", "Are you sure you want to start the mission?")) {
         }
     }
 
+    /**
+     * Starts the drone flight
+     */
     public void takeoff() {
         if (showConfirmationDialog("Takeoff", "Are you sure you want to takeoff?")) {
+            try {
+                drone.takeoff();
+            } catch (TelloNetworkException | TelloCommandTimedOutException | TelloCustomCommandException | TelloGeneralCommandException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void land() {
         if (showConfirmationDialog("Land", "Are you sure you want to land?")) {
+            try {
+                drone.land();
+            } catch (TelloNetworkException | TelloCommandTimedOutException | TelloCustomCommandException | TelloGeneralCommandException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void turnLeft() {
-        // Implement the logic to initiate the autonomous mission
-        // Call your autonomous flight control code here
+        try {
+            drone.turnLeft(2);
+        } catch (TelloNetworkException | TelloCommandTimedOutException | TelloCustomCommandException |
+                 TelloGeneralCommandException | TelloNoValidIMUException e) {
+            e.printStackTrace();
+        }
     }
 
     public void turnRight() {
-        // Implement the logic to initiate the autonomous mission
-        // Call your autonomous flight control code here
+        try {
+            drone.turnRight(2);
+        } catch (TelloNetworkException | TelloCommandTimedOutException | TelloCustomCommandException |
+                 TelloGeneralCommandException | TelloNoValidIMUException e) {
+            e.printStackTrace();
+        }
     }
 
     public void moveForward() {
-        // Implement the logic to initiate the autonomous mission
-        // Call your autonomous flight control code here
+        try {
+            drone.forward(2);
+        } catch (TelloNetworkException | TelloCommandTimedOutException | TelloCustomCommandException |
+                 TelloGeneralCommandException | TelloNoValidIMUException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void moveBackward() {
+        try {
+            drone.backward(2);
+        } catch (TelloNetworkException | TelloCommandTimedOutException | TelloCustomCommandException |
+                 TelloGeneralCommandException | TelloNoValidIMUException e) {
+            e.printStackTrace();
+        }
     }
 
     // Event handler for setting waypoints
@@ -56,6 +103,14 @@ public class FlightOperations {
         text.setText(rangeFinderResult);
     }
 
+    /**
+     *
+     * Dialog for drone functions
+     *
+     * @param title title of dialog
+     * @param message message of dialog
+     * @return true if OK selected
+     */
     private boolean showConfirmationDialog(String title, String message) {
         Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationDialog.setTitle(title);
