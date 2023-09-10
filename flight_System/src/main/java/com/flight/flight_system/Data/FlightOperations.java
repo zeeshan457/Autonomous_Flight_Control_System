@@ -17,10 +17,26 @@ public class FlightOperations {
 
     /**
      * Autonomous flight method
-     * This will most likely use a machine model to predict a flight plan
+     * This will be a basic mission using a set of methods for interesting movements
      */
     public void startMission() {
         if (showConfirmationDialog("Mission Start", "Are you sure you want to start the mission?")) {
+
+            // Takeoff
+            takeoff();
+
+            // Execute a series of movements
+            moveForward();  // Move forward
+            turnRight();    // Turn right
+            moveForward();  // Move forward
+            turnLeft();     // Turn left
+            moveBackward(); // Move backward
+
+            // Execute a circular movement pattern
+            executeCircle(3, 90); // Circles with a radius of 3 meters and 90-degree segments
+
+            // Land
+            land();
         }
     }
 
@@ -47,6 +63,9 @@ public class FlightOperations {
         }
     }
 
+    /**
+     * Method to turn the drone left
+     */
     public void turnLeft() {
         try {
             drone.turnLeft(2);
@@ -56,6 +75,9 @@ public class FlightOperations {
         }
     }
 
+    /**
+     * Method to turn the drone right
+     */
     public void turnRight() {
         try {
             drone.turnRight(2);
@@ -65,6 +87,9 @@ public class FlightOperations {
         }
     }
 
+    /**
+     * Method to move the drone forward
+     */
     public void moveForward() {
         try {
             drone.forward(2);
@@ -74,6 +99,9 @@ public class FlightOperations {
         }
     }
 
+    /**
+     * Method to move the drone backward
+     */
     public void moveBackward() {
         try {
             drone.backward(2);
@@ -83,22 +111,64 @@ public class FlightOperations {
         }
     }
 
-    // Event handler for setting waypoints
-    public void setWaypoints() {
-//        String waypointsInput = waypointsTextArea.getText();
-        // Process the waypointsInput and execute autonomous flight to follow the waypoints
-        // Implement this logic according to the drone's SDK or your autonomous flight control system.
-        // The waypointsInput will contain the coordinates (latitude, longitude) of the waypoints entered by the user.
-        // For example, you can split the input and extract latitude and longitude values.
-        // Then, use these values to execute autonomous flight to the defined waypoints.
-        // Make sure to comply with the drone's safety guidelines and flight restrictions.
+    /**
+     * Executes a circular movement pattern with the given radius and segment angle
+     *
+     * @param radius  The radius of the circle in meters
+     * @param degrees The angle for each segment in degrees
+     */
+    private void executeCircle(double radius, int degrees) {
+
+        // Calculate the circumference of the circle
+        double circumference = 2 * Math.PI * radius;
+        // Calculate the number of segments needed to complete a 360-degree circle
+        int segments = 360 / degrees;
+
+        // Execute the circular movement
+        for (int i = 0; i < segments; i++) {
+            moveForward(); // Move forward
+            turnRight();
+        }
     }
 
-    // New method for the range finder operation
-    public void findDroneUsingRangeFinder(TextArea text) {
-        // Implement the logic for finding the drone using the range finder
-        // For example, you can call methods from the FlightOperations class and update the rangeFinderOutput TextArea accordingly.
+    /**
+     * Method to set way points
+     */
+    public void setWaypoints(String waypointsInput) {
 
+        // Split the input into individual waypoints (latitude, longitude pairs)
+        String[] waypoints = waypointsInput.split("\n"); // Assuming each waypoint is on a new line
+
+        // Iterate through the waypoints and execute autonomous flight to each waypoint
+        for (String waypoint : waypoints) {
+            String[] coordinates = waypoint.split(",");
+            if (coordinates.length != 2) {
+                continue;
+            }
+
+            double latitude = Double.parseDouble(coordinates[0].trim());
+            double longitude = Double.parseDouble(coordinates[1].trim());
+
+            // Execute autonomous flight to the current waypoint
+            executeAutonomousFlightToWaypoint(latitude, longitude);
+
+        }
+    }
+
+    /**
+     * Method to execute autonomous flight to a specific waypoint
+     */
+    private void executeAutonomousFlightToWaypoint(double latitude, double longitude) {
+
+    }
+
+    /**
+     * Method to locate the drone
+     */
+    public void findDroneUsingRangeFinder(TextArea text) {
+
+//        double droneLatitude = getDroneCoordinates().getLatitude();
+//        double droneLongitude = getDroneCoordinates().getLongitude();
         String rangeFinderResult = "Drone found at coordinates: (latitude, longitude)";
         text.setText(rangeFinderResult);
     }
@@ -116,11 +186,7 @@ public class FlightOperations {
         confirmationDialog.setTitle(title);
         confirmationDialog.setHeaderText(null);
         confirmationDialog.setContentText(message);
-
-        // Set the button types (OK and Cancel)
         confirmationDialog.getButtonTypes().setAll(ButtonType.OK, ButtonType.CANCEL);
-
-        // Show and wait for the user's response
         ButtonType result = confirmationDialog.showAndWait().orElse(ButtonType.CANCEL);
 
         // Return true if the user clicked OK, false otherwise

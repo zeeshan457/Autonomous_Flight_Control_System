@@ -30,8 +30,8 @@ public class FlightData {
      * @return weather
      */
     private String getWeatherData() {
-        String apiKey = "key"; // Replace with your actual API key
-        String city = "city"; // Replace with your actual city name
+        String apiKey = "key";
+        String city = "city";
         String weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
 
         try {
